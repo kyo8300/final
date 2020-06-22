@@ -125,6 +125,7 @@ $(function () {
   scoreDisplay();
 
   $('#start-button').click(function () {
+    $('#start-button').prop('disabled', true);
     setInterval(function () {
       if (timer <= 0) {
         alert('Game Over !!');
