@@ -9,6 +9,9 @@ let card1;
 let card2;
 let pair = 0;
 
+let timer = 100;
+let score = 0;
+
 function cardlock() {
   $('#card li:eq(' + index + ')').addClass('lock');
 }
@@ -47,17 +50,34 @@ function uraOpen(j) {
     .animate({ left: '0' }, speed);
 }
 
+function scoreDisplay() {
+  $('#score').text(score);
+}
+
+function plusScore() {
+  score += 10;
+  scoreDisplay();
+}
+
+function minusScore() {
+  score -= 5;
+  scoreDisplay();
+}
+
 function comparison() {
   if (card1 == card2) {
     $('#card li:eq(' + index + ')').addClass('off');
     $('#card li:eq(' + index1 + ')').addClass('off');
     pair++;
+    plusScore();
     if (pair == total / 2) {
       setTimeout(function () {
         alert('Finish!');
+        alert(`Your score is ${score} !!`);
       }, returnSec);
     }
   } else {
+    minusScore();
     setTimeout(function () {
       cardClose(index, uraOpen);
       cardClose(index1, uraOpen);
@@ -68,6 +88,15 @@ function comparison() {
   setTimeout(function () {
     unlock();
   }, returnSec + speed * 2);
+}
+
+function textDisplay() {
+  $('#timer').text(timer);
+}
+
+function countDown() {
+  timer--;
+  textDisplay();
 }
 
 function alllock() {
@@ -92,19 +121,32 @@ $(function () {
     $('#card').append("<li><img src='img/card.png'></li>");
   }
 
-  $('#card li').click(function () {
-    index = $('#card li').index(this);
-    cardlock();
-    cardClose(index, omoteOpen);
+  textDisplay();
+  scoreDisplay();
 
-    if (first == true) {
-      index1 = index;
-      card1 = cat[index];
-      first = false;
-    } else {
-      alllock();
-      card2 = cat[index];
-      comparison();
-    }
+  $('#start-button').click(function () {
+    setInterval(function () {
+      if (timer <= 0) {
+        alert('Game Over !!');
+      } else {
+        countDown();
+      }
+    }, 1000);
+
+    $('#card li').click(function () {
+      index = $('#card li').index(this);
+      cardlock();
+      cardClose(index, omoteOpen);
+
+      if (first == true) {
+        index1 = index;
+        card1 = cat[index];
+        first = false;
+      } else {
+        alllock();
+        card2 = cat[index];
+        comparison();
+      }
+    });
   });
 });

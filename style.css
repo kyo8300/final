@@ -4,6 +4,27 @@
   height: 200px;
   list-style: none;
 }
+
+div {
+  text-align: center;
+  font-size: 30px;
+}
+
+div h3 {
+  margin-top: 5px;
+  margin-bottom: 0;
+}
+
+#score {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#timer {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 #card li {
   margin: 10px;
   width: 150px;
